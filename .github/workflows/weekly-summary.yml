@@ -22,43 +22,9 @@ jobs:
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             const weekNumber = Math.floor(diffDays / 7) + 1;
             
-            const title = `Weekly Summary & Review - Week ${weekNumber}`;
+            const title = "Weekly Summary & Review - Week " + weekNumber;
             
-            const body = `## End of Week ${weekNumber} - Time for Review!
-
-Hey! Another week of AWS learning is in the books. Let's take some time to reflect and prepare for the next week.
-
-### End of Week Checklist:
-- [ ] Completed all daily study sessions for this week
-- [ ] Finished all hands-on labs for this week
-- [ ] Took the weekly practice quiz
-- [ ] Reviewed incorrect answers
-- [ ] Updated your notes with key concepts
-- [ ] Identified weak areas for future review
-
-### Performance Review:
-- **Quiz Score This Week:** ______ / _____
-- **Estimated Confidence Level:** [ ] Low [ ] Medium [ ] High
-- **Topics That Need Review:** [List here]
-
-### Next Week Prep:
-- Review the next week's topics in the learning plan
-- Ensure you have access to necessary AWS services
-- Set reminders for the week's study sessions
-
-### Reflection:
-Take a moment to write about:
-1. What went well this week?
-2. What challenges did you face?
-3. What will you do differently next week?
-
-### Quick Links:
-- [View This Week's Learning Plan](https://github.com/UtsavSaha/workspace/blob/main/AWS_Learning_Path.md)
-- [Check Your Issues & Progress](https://github.com/UtsavSaha/workspace/issues)
-- [View Your Practice Exam Scores](https://github.com/UtsavSaha/workspace/tree/main/practice-exams)
-
----
-Keep up the great work! You're making progress towards your AWS certification!`;
+            const body = "## End of Week " + weekNumber + " - Time for Review!\n\nHey! Another week of AWS learning is in the books. Let's take some time to reflect and prepare for the next week.\n\n### End of Week Checklist:\n- [ ] Completed all daily study sessions for this week\n- [ ] Finished all hands-on labs for this week\n- [ ] Took the weekly practice quiz\n- [ ] Reviewed incorrect answers\n- [ ] Updated your notes with key concepts\n- [ ] Identified weak areas for future review\n\n### Performance Review:\n- **Quiz Score This Week:** ______ / _____\n- **Estimated Confidence Level:** [ ] Low [ ] Medium [ ] High\n- **Topics That Need Review:** [List here]\n\n### Next Week Prep:\n- Review the next week's topics in the learning plan\n- Ensure you have access to necessary AWS services\n- Set reminders for the week's study sessions\n\n### Reflection:\nTake a moment to write about:\n1. What went well this week?\n2. What challenges did you face?\n3. What will you do differently next week?\n\n### Quick Links:\n- [View This Week's Learning Plan](https://github.com/UtsavSaha/workspace/blob/main/AWS_Learning_Path.md)\n- [Check Your Issues & Progress](https://github.com/UtsavSaha/workspace/issues)\n- [View Your Practice Exam Scores](https://github.com/UtsavSaha/workspace/tree/main/practice-exams)\n\n---\nKeep up the great work! You're making progress towards your AWS certification!";
             
             github.rest.issues.create({
               owner: context.repo.owner,

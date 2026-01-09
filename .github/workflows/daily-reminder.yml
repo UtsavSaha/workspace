@@ -26,34 +26,9 @@ jobs:
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             const weekNumber = Math.floor(diffDays / 7) + 1;
             
-            const title = `Daily Study Reminder: ${dateStr} (${dayOfWeek})`;
+            const title = "Daily Study Reminder: " + dateStr + " (" + dayOfWeek + ")";
             
-            const body = `## Today's Focus
-            
-Time to hit your AWS learning goals for today!
-
-**Current Week:** Week ${weekNumber}
-**Day:** ${dayOfWeek}
-**Date:** ${dateStr}
-
-### What to Do:
-1. Open the detailed learning plan: [AWS_Learning_Path.md](https://github.com/UtsavSaha/workspace/blob/main/AWS_Learning_Path.md)
-2. Find today's topics in Week ${weekNumber}
-3. Create a daily study issue if you haven't already
-4. Follow the study plan for 30-60 minutes
-5. Log your progress in the issue
-
-### Time Commitment
-- **Weekday:** 30-60 minutes
-- **Weekend:** 2 hours
-
-### Quick Links
-- [Weekly Milestones](https://github.com/UtsavSaha/workspace/milestones)
-- [All Issues](https://github.com/UtsavSaha/workspace/issues)
-- [Learning Path Details](https://github.com/UtsavSaha/workspace/blob/main/AWS_Learning_Path.md)
-
----
-Remember: Consistency is key to success! Every day brings you closer to your certification.`;
+            const body = "## Today's Focus\n\nTime to hit your AWS learning goals for today!\n\n**Current Week:** Week " + weekNumber + "\n**Day:** " + dayOfWeek + "\n**Date:** " + dateStr + "\n\n### What to Do:\n1. Open the detailed learning plan: [AWS_Learning_Path.md](https://github.com/UtsavSaha/workspace/blob/main/AWS_Learning_Path.md)\n2. Find today's topics in Week " + weekNumber + "\n3. Create a daily study issue if you haven't already\n4. Follow the study plan for 30-60 minutes\n5. Log your progress in the issue\n\n### Time Commitment\n- **Weekday:** 30-60 minutes\n- **Weekend:** 2 hours\n\n### Quick Links\n- [Weekly Milestones](https://github.com/UtsavSaha/workspace/milestones)\n- [All Issues](https://github.com/UtsavSaha/workspace/issues)\n- [Learning Path Details](https://github.com/UtsavSaha/workspace/blob/main/AWS_Learning_Path.md)\n\n---\nRemember: Consistency is key to success! Every day brings you closer to your certification.";
             
             github.rest.issues.create({
               owner: context.repo.owner,
