@@ -1,0 +1,104 @@
+# Gitignore for AWS Learning Path
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE/Editor
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# AWS Credentials (IMPORTANT - Never commit these!)
+.aws/
+credentials
+*.pem
+*.ppk
+*.key
+*-key-pair.*
+~/.aws
+
+# Sensitive Information
+secrets.json
+.env
+.env.local
+*.key
+*.pem
+*.pub
+
+# Node modules (if using any Node-based tools)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Personal Notes (optional - uncomment to version control)
+# personal-notes/
+# random-thoughts.md
+
+# Compiled files
+*.class
+*.jar
+
+# Mac specific
+.AppleDouble
+.LSOverride
+
+# Windows specific
+*.lnk
+$RECYCLE.BIN/
+
+# Never commit AWS access keys or secrets!
+access_key_id
+secret_access_key
+
+# Build artifacts
+/dist
+/build
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+.pytest_cache/

@@ -1,0 +1,69 @@
+name: Weekly Summary
+on:
+  schedule:
+    # Run every Sunday at 6 PM UTC
+    - cron: '0 18 * * 0'
+  workflow_dispatch:
+
+jobs:
+  weekly-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Create weekly summary reminder
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const today = new Date();
+            const startDate = new Date('2026-01-09');
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const weekNumber = Math.floor(diffDays / 7) + 1;
+            
+            const title = `📊 Weekly Summary & Review - Week ${weekNumber}`;
+            
+            const body = `## 🎯 End of Week ${weekNumber} - Time for Review!
+
+Hey! Another week of AWS learning is in the books. Let's take some time to reflect and prepare for the next week.
+
+### 📋 End of Week Checklist:
+- [ ] Completed all daily study sessions for this week
+- [ ] Finished all hands-on labs for this week
+- [ ] Took the weekly practice quiz
+- [ ] Reviewed incorrect answers
+- [ ] Updated your notes with key concepts
+- [ ] Identified weak areas for future review
+
+### 📊 Performance Review:
+- **Quiz Score This Week:** ______ / _____
+- **Estimated Confidence Level:** [ ] Low [ ] Medium [ ] High
+- **Topics That Need Review:** [List here]
+
+### 🔄 Next Week Prep:
+- Review the next week's topics in the learning plan
+- Ensure you have access to necessary AWS services
+- Set reminders for the week's study sessions
+
+### 💡 Reflection:
+Take a moment to write about:
+1. What went well this week?
+2. What challenges did you face?
+3. What will you do differently next week?
+
+### 🔗 Quick Links:
+- [View This Week's Learning Plan](https://github.com/${{ github.repository }}/blob/main/AWS_Learning_Path.md)
+- [Check Your Issues & Progress](https://github.com/${{ github.repository }}/issues)
+- [View Your Practice Exam Scores](https://github.com/${{ github.repository }}/tree/main/practice-exams)
+
+---
+**Keep up the great work!** 🌟 You're making progress towards your AWS certification!`;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['reminder', 'weekly-review'],
+            });

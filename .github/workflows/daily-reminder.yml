@@ -1,0 +1,64 @@
+name: Daily Study Reminder
+on:
+  schedule:
+    # Run every day at 9 AM UTC (adjust timezone as needed)
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  create-daily-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Create daily study reminder issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const today = new Date();
+            const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][today.getDay()];
+            const dateStr = today.toISOString().split('T')[0];
+            
+            // Calculate week number
+            const startDate = new Date('2026-01-09');
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const weekNumber = Math.floor(diffDays / 7) + 1;
+            
+            const title = `📚 Daily Study Reminder: ${dateStr} (${dayOfWeek})`;
+            
+            const body = `## 🎯 Today's Focus
+            
+Time to hit your AWS learning goals for today! 💪
+
+**Current Week:** Week ${weekNumber}
+**Day:** ${dayOfWeek}
+**Date:** ${dateStr}
+
+### 📋 What to Do:
+1. Open the detailed learning plan: [AWS_Learning_Path.md](https://github.com/${{ github.repository }}/blob/main/AWS_Learning_Path.md)
+2. Find today's topics in Week ${weekNumber}
+3. Create a daily study issue if you haven't already
+4. Follow the study plan for 30-60 minutes
+5. Log your progress in the issue
+
+### ⏰ Time Commitment
+- **Weekday:** 30-60 minutes
+- **Weekend:** 2 hours
+
+### 🔗 Quick Links
+- [Weekly Milestones](https://github.com/${{ github.repository }}/milestones)
+- [All Issues](https://github.com/${{ github.repository }}/issues)
+- [Learning Path Details](https://github.com/${{ github.repository }}/blob/main/AWS_Learning_Path.md)
+
+---
+**Remember:** Consistency is key to success! Every day brings you closer to your certification. 🚀`;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['reminder', 'daily-task'],
+            });
