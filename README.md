@@ -38,9 +38,7 @@ A structured 12-week learning plan to achieve AWS Solutions Architect Associate 
 
 ## 🎯 Weekly Objectives
 
-Each week has specific learning outcomes tracked as GitHub milestones and issues. Check the [Projects](https://github.com/UtsavSaha/workspace/projects) tab to view progress.
-
-## 📖 Detailed Learning Path
+Each week has specific learning outcomes tracked as GitHub milestones and issues. The GitHub Project board is automatically created and managed by workflows - it will be populated with issues from the first daily reminder.
 
 For a detailed week-by-week breakdown with daily topics and hands-on labs, see [AWS_Learning_Path.md](./AWS_Learning_Path.md)
 
