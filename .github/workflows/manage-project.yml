@@ -1,0 +1,105 @@
+name: Manage Milestones
+on:
+  issues:
+    types: [opened, closed, reopened]
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  setup-milestones:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create milestones for each week
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            
+            // Get existing milestones
+            const existingMilestones = await github.rest.issues.listMilestones({
+              owner: owner,
+              repo: repo,
+              state: 'open'
+            });
+            
+            const existingTitles = existingMilestones.data.map(m => m.title);
+            
+            // Create milestones for each week
+            for (let week = 1; week <= 12; week++) {
+              const title = 'Week ' + week;
+              
+              if (!existingTitles.includes(title)) {
+                await github.rest.issues.createMilestone({
+                  owner: owner,
+                  repo: repo,
+                  title: title,
+                  description: 'Week ' + week + ' of the AWS Learning Path'
+                });
+                console.log('Created milestone:', title);
+              }
+            }
+            
+            console.log('Milestone setup complete');
+
+  organize-issues:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Assign milestone based on labels
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const issueNumber = issue.number;
+            
+            // Check for Week X labels
+            let weekLabel = null;
+            if (issue.labels && issue.labels.length > 0) {
+              for (const label of issue.labels) {
+                const match = label.name.match(/Week (\d+)/);
+                if (match) {
+                  weekLabel = 'Week ' + match[1];
+                  break;
+                }
+              }
+            }
+            
+            if (weekLabel) {
+              // Find milestone ID
+              const milestones = await github.rest.issues.listMilestones({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'all'
+              });
+              
+              let milestoneId = null;
+              for (const milestone of milestones.data) {
+                if (milestone.title === weekLabel) {
+                  milestoneId = milestone.number;
+                  break;
+                }
+              }
+              
+              if (milestoneId) {
+                // Update issue with milestone
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  milestone: milestoneId
+                });
+                console.log('Assigned milestone:', weekLabel);
+              }
+            }
+            
+            console.log('Issue #' + issueNumber + ' processed');
